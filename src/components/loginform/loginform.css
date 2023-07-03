@@ -12,3 +12,13 @@
   width: auto;
   height: 100%;
 }
+
+@media screen and (max-width: 600px) {
+  .googleLogo{
+    
+    width: 50vw;
+    height: 10vh;
+    margin: 0 auto;
+    margin-top: 40.5vh !important;
+  }
+}
