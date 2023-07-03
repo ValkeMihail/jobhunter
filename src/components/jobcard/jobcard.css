@@ -1,7 +1,6 @@
 .jobCard{
   border: 1px solid white;
   width: 80%;
-  cursor: grab;
   margin: 1em auto;
   border-radius: 15px;
   padding: 1em;
@@ -10,9 +9,9 @@
 
 
 .jobCard .companyLogo{
-  width : 3em;
-  height: 3em;
-  border-radius: 50%;
+  width : 1.5em;
+  height: 1.5em;
+  margin-right: 0.25em;
 
 }
 
@@ -52,13 +51,6 @@
 }
 
 
-.dateAndLocationWrap{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  margin: 0;
-}
 
 .accordionHeader{
   cursor: pointer !important;
@@ -78,10 +70,7 @@
 }
 
 
-.dragging{
-  border: 1px solid red;
-  cursor: grabbing;
-}
+
 
 .topArrows{
   display: flex;
@@ -95,4 +84,32 @@
   height: 1.5em;
   margin: 0.5em;
   cursor: pointer;
+}
+
+.dateAndLocationWrap{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content:space-between;
+  margin: 0 0 1em 0;
+}
+
+
+.flexRow{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.flexRow img{
+  margin: 0;
+  width: 1em;
+  height: 1em;
+}
+
+.flexRow h4{
+  margin: 0;
+  padding: 0;
+  margin-left: 0.25em;
 }

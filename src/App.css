@@ -19,13 +19,72 @@
 .jobsContainer{
   display: flex;
   margin-top: 2em;
-  gap: 1.5em;
+  gap: 0.25em;
   flex-direction: row;
   align-items: flex-start;
   justify-content: space-around;
+  height: fit-content;
 }
 
 .addNewJob{
   width: 20%;
   margin: 2em auto;
+}
+
+.signOut{
+  width: 20%;
+  margin: 2em auto;
+}
+
+.headerApp{
+  margin: 2rem 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.headerApp button{
+  margin: 0;
+  background-color: tomato;
+
+}
+.headerApp h1{
+  margin: 0;
+  margin-bottom: 0.2em;
+  padding: 0;
+  line-height: 4em;
+}
+
+
+.message{
+  position: fixed;
+  top: 5%;
+  left: 50%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  transform: translate(-50%, -50%);
+  width: 30vh;
+  height: 3vw;
+  background-color: orangered;
+  border-radius: 10px;
+}
+
+
+.logoImage{
+  width: 3em;
+  height: 3em;
+  border-radius: 25%;
+}
+
+.logoWrap{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0;
+  gap : 2em;
+  padding: 0;
 }

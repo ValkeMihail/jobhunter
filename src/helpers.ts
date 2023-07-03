@@ -1,6 +1,8 @@
 
-
-export const getTimeAgo = (date: Date) => {
+import {Timestamp} from "./firebase"
+export const getTimeAgo = (timestamp: Timestamp) => {
+    
+    const date = timestamp.toDate();
     const now = new Date();
     const diff = now.getTime() - date.getTime();
     const seconds = Math.floor(diff / 1000);
@@ -25,4 +27,32 @@ export const getTimeAgo = (date: Date) => {
     } else {
         return `${seconds} seconds ago`;
     }
+}
+
+
+export const showMessage = (message: string , backcolor : string) => {
+
+    const div = document.createElement("div");
+    div.classList.add("message");
+    div.style.backgroundColor = backcolor;
+    div.textContent = message;
+    document.body.appendChild(div);
+    setTimeout(() => {
+        div.remove();
+    }, 3000);
+
+}
+
+
+export const hashString = (str: string) => {
+    let hash = 0;
+    if (str.length === 0) {
+        return hash;
+    }
+    for (let i = 0; i < str.length; i++) {
+        const char = str.charCodeAt(i);
+        hash = (hash << 5) - hash + char;
+        hash = hash & hash;
+    }
+    return hash;
 }

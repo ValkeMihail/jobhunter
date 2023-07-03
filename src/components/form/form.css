@@ -15,7 +15,9 @@
   width: 70%;
 }
 
-
+.heroSecton{
+  padding-top: 0.5em;
+}
 
 .formControl input{
   width: 50%;

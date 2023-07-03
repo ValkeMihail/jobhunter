@@ -1,0 +1,14 @@
+
+
+.googleLogo{
+    width: 15vw;
+    height: 10vh;
+    margin: 0 auto;
+    margin-top: 25%;
+}
+
+.googleLogo img{
+  object-fit: contain;
+  width: auto;
+  height: 100%;
+}

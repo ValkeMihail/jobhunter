@@ -2,24 +2,28 @@ import "./jobcard.css";
 import companypng from "../../assets/company.png";
 import { getTimeAgo } from "../../helpers";
 import chevronDown from "../../assets/chevronDown.svg";
-import { useState , useEffect} from "react";
+import { useState ,useContext, useEffect} from "react";
 import arrowRight from "../../assets/arrowRight.png";
 import arrowLeft from "../../assets/arrowLeft.png"; 
+import locationIcon from "../../assets/location.svg";
+import timeIcon from "../../assets/time.svg";
+import { Timestamp, arrayRemove, collection, db, doc, updateDoc } from "../../firebase";
+import { AuthContext } from "../../AuthContext";
 
 export type Job = {
-  id: string;
-  jobTitle: string;
-  companyName: string;
-  dateApplied: Date;
-  location: string;
-  status: string;
-  notes: string;
-  url: string;
+  id: number | null;
+  jobTitle: string | null;
+  companyName: string | null;
+  dateApplied: Timestamp;
+  location: string | null;
+  status: string | null;
+  notes: string | null;
+  url: string | null;
 };
 
 type JobCardProps = {
   job: Job;
-  onStatusChange: (id: string, status: string) => void;
+  onStatusChange: (id: number, status: string) => void;
 };
 
 const statusArray = ["applied", "interview", "rejected"];
@@ -29,17 +33,31 @@ export const JobCard = ({ job ,onStatusChange}: JobCardProps) => {
   const [status, setStatus] = useState(job.status);
   const [showNotes, setShowNotes] = useState(false);
 
-  
+  const {user,handleDeleteJob} = useContext(AuthContext);
+
   useEffect(() => {
+    if (job.id != null && status != null)
     onStatusChange(job.id, status);
   }, [status]);
 
 
 
+  const handleDelete = async(id: number) => {
+    const userRef = doc (collection(db, "users"), user!?.id!); 
+    const currentJobs = user?.jobs;
+    const jobObj = currentJobs?.find((job) => job.id === id);
+    await updateDoc(userRef, {
+      jobs: arrayRemove(jobObj),
+    }).then(()=> {
+      handleDeleteJob(id);
+      console.log("object deleted");
+    })
+  }
+
   
   
   const moveJob = (direction: string) => {
-    const currentIndex = statusArray.indexOf(status);
+    const currentIndex = statusArray.indexOf(status!);
     if (direction === "left" && currentIndex > 0) {
       setStatus(statusArray[currentIndex - 1]);
     } else if (direction === "right" && currentIndex < statusArray.length - 1) {
@@ -69,19 +87,36 @@ export const JobCard = ({ job ,onStatusChange}: JobCardProps) => {
         <h3>{job.companyName}</h3>
       </div>
       <div className="dateAndLocationWrap">
-        <h4>{getTimeAgo(job.dateApplied)}</h4>
-        <h4>{job.location}</h4>
+        <div className="flexRow timeWrap">
+          <img src={timeIcon} alt=" time icon" />
+          <h4>{getTimeAgo(job.dateApplied)}</h4>
+        </div>
+        <div className="flexRow">
+           <img src={locationIcon} alt=" location icon" />
+          <h4>{job.location}</h4>
+        </div>
       </div>
       <div className="accordionNotes">
         <div onClick={() => setShowNotes(!showNotes)} className="accordionHeader">
-          <h4>Notes</h4>
+          <h4>Info</h4>
           <img className="chevronDown" src={chevronDown} alt="drop down button" />
         </div>
         {showNotes ? (
           <div className="accordionNotesContent">
-            <a href={job.url}>{job.url}</a>
+            <a href={job.url!} target="blank">{job.url!}</a>
             <br />
             {job.notes}
+            <br />
+            <button
+              style={{
+                border: "none",
+                backgroundColor: "orangered",
+                marginTop: "1rem",
+              }}
+              onClick={() => handleDelete(job.id!)}  
+            >
+              Delete Job
+            </button>
           </div>
         ) : null}
       </div>
